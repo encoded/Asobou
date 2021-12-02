@@ -1,6 +1,17 @@
+//-------PICTURE DATA--------------//
+//this requires: picturedata.js
+
+let pictureDataGroup = new PictureDataGroup();
+let path = './images/storycubes/';
+let extension = '.png';
+
+pictures.forEach(pic => {
+	let fullPath = path + pic + extension;
+	pictureDataGroup.addPicture(fullPath);
+});
+
 //-------IMAGES LOADING-------------//
-const loader = new THREE.TextureLoader();
-const particleTexture = loader.load('./images/numia/particletexture.png');
+const loader = new THREE.TextureLoader(); //for later use
 //---------------------------------//
 
 const scene = new THREE.Scene();
@@ -59,14 +70,24 @@ let DrawGrid = function()
 	//let's draw each shape
 	for (let row = 0; row < numRow; row++) {
 
-		let y = - ((row + 1) * (size + margin));
+		let y = -(row+1) * (size + margin);
 
 		for (let col = 0; col < numColomn; col++) {
 			// flat shape
-			let x = margin + col * (size + margin);
-			let geometry = new THREE.ShapeGeometry( roundedRectShape );
-			//let geometry = new THREE.PlaneGeometry( size, size );
-			let material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide});
+			let x = (col+1) * (size + margin);
+
+			//texture
+			let texture = loader.load(pictureDataGroup.getPictureArray[row*numColomn+col].resourceUrl);
+
+			//let geometry = new THREE.ShapeGeometry( roundedRectShape );
+			let geometry = new THREE.PlaneGeometry( size, size );
+			let material = new THREE.MeshBasicMaterial( {
+				map: texture, 
+				transparent: false, //we need this to see the texture
+				color: 0xffff00, 
+				//side: THREE.DoubleSide
+			});
+
 			let mesh = new THREE.Mesh( geometry, material);
 			mesh.position.set( x, y, -1);
 			group.add( mesh );
@@ -92,12 +113,14 @@ var onWindowResize = function()
 
 window.addEventListener('resize', onWindowResize);
 
+//========================CUSTOM FUNCTION=============================//
+
+
 //========================MAIN PIPELINE=============================//
 
 //Game logic
 var update = function()
 {
-	//your logic here
 }
 
 //Draw scene
