@@ -1,0 +1,16 @@
+{
+    "comment" : "THIS IS NOT AN ACTUAL FIELD! For every picture create some picture data with the following field.",
+    "name" : "temp_name",
+    "nouns" : [
+        "temp_verb_01",
+        "temp_verb_02"
+    ],
+    "adjectives" : [
+        "temp_verb_01",
+        "temp_verb_02"
+    ],
+    "verbs" : [
+        "temp_verb_01",
+        "temp_verb_02"
+    ]
+}
